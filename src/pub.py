@@ -27,6 +27,28 @@ class Pub:
     def increase_till(self, amount):
         self.till += amount
 
+    def check_customer_age(self, customer):
+        if customer.age >= 21:
+            return True
+        else:
+            return False
+
+    # ^ This function isn't needed because I rolled it into
+    # the one below, but I kept it for testing purposes.
+
     def sell_drink(self, customer, drink):
-        customer.wallet -= drink.price
-        self.till += drink.price
+        if customer.age < 21 or customer.inebriation >= 20 or customer.wallet < drink.price:
+             return "Sale denied. Oot ma pub."
+        else:
+            customer.wallet -= drink.price
+            customer.inebriation += drink.units
+            self.till += drink.price
+
+    def sell_food(self, customer, food):
+        if customer.wallet < food.price:
+            return "We're not a soup kitchen. Oot ma pub."
+        else:
+            customer.wallet -= food.price
+            customer.inebriation -= food.rejuvenation_level
+            self.till += food.price
+
