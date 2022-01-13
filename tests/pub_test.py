@@ -74,3 +74,19 @@ class TestPub(unittest.TestCase):
         self.assertEqual(40.00, self.person.wallet)
         self.assertEqual(-10, self.person.inebriation)
         self.assertEqual(210.00, self.pub.till)
+
+    def test_drink_stock(self):
+        self.pub.add_drink(self.drink1)
+        self.pub.add_drink(self.drink2)
+        self.pub.create_drink_stock()
+        self.assertEqual(2, len(self.pub.drink_stock))
+        self.assertEqual({"name" : "Stella", "price" : 5.00, "units" : 5}, self.pub.drink_stock[0])
+
+
+    def test_change_stock_value(self):
+        self.pub.add_drink(self.drink2)
+        self.pub.add_drink(self.drink1)
+        self.pub.create_drink_stock()
+        self.assertEqual(2, len(self.pub.drink_stock))
+        self.pub.change_stock_value("Stella", 6.00)
+        self.assertEqual(6.00, self.pub.drink_stock[1]["price"])

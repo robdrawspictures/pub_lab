@@ -1,10 +1,9 @@
-# from customer import Customer
-
 class Pub:
     def __init__(self, name, till):
         self.name = name
         self.till = till
         self.drinks = []
+        self.drink_stock = []
 
     def add_drink(self, drink):
         self.drinks.append(drink)
@@ -52,3 +51,13 @@ class Pub:
             customer.inebriation -= food.rejuvenation_level
             self.till += food.price
 
+    def create_drink_stock(self):
+        drinktionary = []
+        for drink in self.drinks:
+            drinktionary.append({"name" : drink.name, "price" : drink.price, "units" : drink.units})
+        self.drink_stock = drinktionary
+
+    def change_stock_value(self, name, new_price):
+        for drink in self.drink_stock:
+            if drink["name"] == name:
+                drink["price"] = new_price
